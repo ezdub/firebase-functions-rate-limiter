@@ -97,7 +97,6 @@ export class FirebaseFunctionsRateLimiter {
      * Checks if quota is exceeded. If not — records usage time in the backend database.
      *
      * @param qualifier — a string that identifies the limited resource accessor (for example the user id)
-     * @deprecated
      */
     public async isQuotaExceededOrRecordUsage(qualifier?: string): Promise<boolean> {
         return await this.genericRateLimiter.isQuotaExceededOrRecordCall(
