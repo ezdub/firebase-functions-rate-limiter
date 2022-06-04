@@ -1,3 +1,7 @@
 {
-    "extends": "jblew-tslint-config"
+    "extends": "jblew-tslint-config",
+    "rules": {
+        "max-line-length": false,
+        "no-namespace": false
+    }
 }
