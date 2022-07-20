@@ -3,18 +3,15 @@ import ow from "ow"
 import { FirebaseFunctionsRateLimiterConfiguration } from "./FirebaseFunctionsRateLimiterConfiguration"
 import { PersistenceProvider } from "./persistence/PersistenceProvider"
 import { PersistenceRecord } from "./persistence/PersistenceRecord"
-import { TimestampProvider } from "./timestamp/TimestampProvider"
 
 export class GenericRateLimiter {
     private configuration: FirebaseFunctionsRateLimiterConfiguration.ConfigurationFull
     private persistenceProvider: PersistenceProvider
-    private timestampProvider: TimestampProvider
     private debugFn: (msg: string) => void
 
     public constructor(
         configuration: FirebaseFunctionsRateLimiterConfiguration,
         persistenceProvider: PersistenceProvider,
-        timestampProvider: TimestampProvider,
         debugFn: (msg: string) => void = (msg: string) => {
             /* */
         },
@@ -25,9 +22,6 @@ export class GenericRateLimiter {
 
         this.persistenceProvider = persistenceProvider
         ow(this.persistenceProvider, "persistenceProvider", ow.object)
-
-        this.timestampProvider = timestampProvider
-        ow(this.timestampProvider, "timestampProvider", ow.object)
 
         this.debugFn = debugFn
     }
@@ -92,7 +86,8 @@ export class GenericRateLimiter {
     }
 
     private getTimestampsSeconds(): { current: number; threshold: number } {
-        const currentServerTimestampSeconds: number = this.timestampProvider.getTimestampSeconds()
+        const currentServerTimestampSeconds: number = Date.now() / 1000
+        //  this.timestampProvider.getTimestampSeconds() // newer firebase admin SDK does conversion
         return {
             current: currentServerTimestampSeconds,
             threshold: currentServerTimestampSeconds - this.configuration.periodSeconds,

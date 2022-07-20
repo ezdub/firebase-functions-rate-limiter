@@ -1,0 +1,9 @@
+{
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "clean build",
+      "task": "npm: build",
+      "tooltip": ""
+    }
+  ]
+}

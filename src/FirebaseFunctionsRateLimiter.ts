@@ -9,7 +9,6 @@ import { FirestorePersistenceProvider } from "./persistence/FirestorePersistence
 import { PersistenceProvider } from "./persistence/PersistenceProvider"
 import { PersistenceProviderMock } from "./persistence/PersistenceProviderMock"
 import { RealtimeDbPersistenceProvider } from "./persistence/RealtimeDbPersistenceProvider"
-import { FirebaseTimestampProvider } from "./timestamp/FirebaseTimestampProvider"
 import { FirestoreEquivalent } from "./types/FirestoreEquivalent"
 import { RealtimeDbEquivalent } from "./types/RealtimeDbEquivalent"
 
@@ -71,11 +70,9 @@ export class FirebaseFunctionsRateLimiter {
         this.debugFn = this.constructDebugFn(this.configurationFull)
         persistenceProvider.setDebugFn(this.debugFn)
 
-        const timestampProvider = new FirebaseTimestampProvider()
         this.genericRateLimiter = new GenericRateLimiter(
             this.configurationFull,
             persistenceProvider,
-            timestampProvider,
             this.debugFn,
         )
     }
